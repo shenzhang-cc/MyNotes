@@ -34,7 +34,7 @@
 
 ```c++
 int MaxSubSeqSum_1(vector<int> A) { // 遍历法，找出所有子列的和，求最大值
-    int maxSum = 0, tempSum;
+	int maxSum = 0, tempSum;
     for (int i = 0; i < A.size(); i++)
             {
                 for (int j = i; j < A.size(); j++)
@@ -57,7 +57,7 @@ int MaxSubSeqSum_1(vector<int> A) { // 遍历法，找出所有子列的和
 ```c++
 int MaxSubSeqSum_2(vector<int> A) { //遍历法改进，去掉k的循环
 	int maxSum = 0, tempSum;
-		for (int i = 0; i < A.size(); i++)
+	for (int i = 0; i < A.size(); i++)
 		{
 			tempSum = 0;
 			for (int j = i; j < A.size(); j++)
