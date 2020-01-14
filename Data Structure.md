@@ -26,9 +26,10 @@
 
 ### 应用实例：最大子列和问题
 
-给定n个整数的序列${A_1, A_2, ...,A_n}$, 求函数$f(i, j) = max(0,\sum_{k=i}^jA_k)$的最大值。
+给定n个整数的序列<img src="https://latex.codecogs.com/gif.latex?${A_1,&space;A_2,&space;...,A_n}$" title="${A_1, A_2, ...,A_n}$" />, 求函数<img src="https://latex.codecogs.com/gif.latex?$f(i,&space;j)&space;=&space;max(0,\sum_{k=i}^jA_k)$" title="$f(i, j) = max(0,\sum_{k=i}^jA_k)$" />的最大值。
 
 **法一**
+
 遍历法，找出所有子列的和，求最大值
 
 ```c++
