@@ -3,56 +3,31 @@
 
 ## 知识网络
 
-![](Data%20Structure.assets/%E7%9F%A5%E8%AF%86%E7%BD%91%E7%BB%9C.jpg)
+<img src="Data%20Structure.assets/%E7%9F%A5%E8%AF%86%E7%BD%91%E7%BB%9C.jpg" style="zoom:80%;" />
 
 
 
 ## 基本概念
 
-![](Data%20Structure.assets/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5.jpg)
+<img src="Data%20Structure.assets/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5.jpg" style="zoom:80%;" />
 
 
 
 ### 复杂度渐进表示法
 
-$$
-T(n) = O(f(n)) =\gg T(n) \le Cf(n)
-$$
+<img src="Data%20Structure.assets/image-20200114210100803.png" alt="image-20200114210100803" style="zoom:80%;" />
 
-$$
-T(n) = \Omega (g(n))=\gg T(n)\ge Cg(n)
-$$
-
-$$
-T(n)=\Theta (h(n))=\gg T(n)=O(h(n)) \&\& T(n)=\Omega(n)
-$$
-
-==T(n) = n! 的算法不可用==
+*T(n) = n! 的算法不可用*
 
 ### 复杂度分析技巧
 
-* 若两段算法分别有复杂度 T~1~(n)=O(f~1~(n))和T~2~(n)=O(f~2~(n))，则：
-$$
-T_1(n) + T_2(n) = max(O(f_1(n)), O(f_2(n)))
-$$
-$$
-T_1(n) \times T_2(n) = O(f_1(n) \times f_2(n))
-$$
+<img src="Data%20Structure.assets/image-20200114210442483.png" alt="image-20200114210442483" style="zoom:80%;" />
 
-* 若T(n)是关于n的k阶多项式，那么
-$$
-T(n) = \Theta(n^k)
-$$
-* 一个for循环的时间复杂度等于循环次数乘以循环体代码的复杂度
-* if-else结构的复杂度取决于if的条件判断复杂度和两个分枝部分的复杂度，总体复杂度取三者中最大的
 
 ### 应用实例：最大子列和问题
 
-给定n个整数的序列{A~1~, A~2~, ...,A~n~}, 求函数
-$$
-f(i, j) = max(0,\sum_{k=i}^jA_k)
-$$
-的最大值。
+给定n个整数的序列${A_1, A_2, ...,A_n}$, 求函数$f(i, j) = max(0,\sum_{k=i}^jA_k)$的最大值。
+
 **法一**
 遍历法，找出所有子列的和，求最大值
 
@@ -75,6 +50,9 @@ int MaxSubSeqSum_1(vector<int> A) { // 遍历法，找出所有子列的和
 }
 ```
 **法二**
+
+优化法一，去掉*k*的循环
+
 ```c++
 int MaxSubSeqSum_2(vector<int> A) { //遍历法改进，去掉k的循环
 	int maxSum = 0, tempSum;
@@ -96,6 +74,10 @@ int MaxSubSeqSum_2(vector<int> A) { //遍历法改进，去掉k的循环
 分而治之（递归式）
 
 ```c++
+int MaxSubSeqSum_3(vector<int> A) {  //分而治之，递归式
+	return divideAndConquer(A, 0, A.size() - 1);
+}
+
 int divideAndConquer(vector<int>& A, int left, int right) {
 	int maxLeftSum = 0, maxRightSum = 0, 
 		maxLeftBorderSum = 0, maxRightBorderSum = 0, maxBorderSum = 0;
@@ -124,3 +106,18 @@ int divideAndConquer(vector<int>& A, int left, int right) {
 }
 ```
 
+**法四**
+在线处理
+
+```c++
+int MaxSubSeqSum_4(vector<int> A) {  // 在线处理
+	int tempSum = 0, maxSum = 0;
+	for (int i = 0; i < A.size(); i++)
+	{
+		tempSum += A[i];
+		if (tempSum > maxSum) maxSum = tempSum;
+		else if (tempSum < 0) tempSum = 0;			
+	}
+	return maxSum;
+}
+```
