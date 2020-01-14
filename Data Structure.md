@@ -33,21 +33,21 @@
 遍历法，找出所有子列的和，求最大值
 
 ```c++
-int MaxSubSeqSum_1(vector<int> A) { // 遍历法，找出所有子列的和，求最大值
-	int maxSum = 0, tempSum;
-    for (int i = 0; i < A.size(); i++)
-            {
-                for (int j = i; j < A.size(); j++)
-                {
-                    tempSum = 0;
-                    for (int k = i; k < j; k++)
-                    {
-                        tempSum += A[k];
-                    }
-                    if (tempSum > maxSum) maxSum = tempSum;
-                }
-            }
-	return maxSum;
+int MaxSubSeqSum_1(vector<int> A) { // 遍历法，找出所有子列的和，求最大值
+	int maxSum = 0, tempSum;
+	for (int i = 0; i < A.size(); i++)
+	{
+		for (int j = i; j < A.size(); j++)
+		{
+			tempSum = 0;
+			for (int k = i; k < j; k++)
+			{
+				tempSum += A[k];
+			}
+			if (tempSum > maxSum) maxSum = tempSum;
+		}
+	}
+	return maxSum;
 }
 ```
 **法二**
