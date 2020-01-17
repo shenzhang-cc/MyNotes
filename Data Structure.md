@@ -31,7 +31,7 @@
 **法一**
 
 遍历法，找出所有子列的和，求最大值
-<img src="Data%20Structure.assets/20200117_111218541_iOS.png" style="zoom: 50%;" align="center">
+<img src="Data%20Structure.assets/20200117_111218541_iOS.png" style="zoom: 30%;">
 
 ```c++
 int MaxSubSeqSum_1(vector<int> A) { // 遍历法，找出所有子列的和，求最大值
@@ -75,8 +75,8 @@ int MaxSubSeqSum_2(vector<int> A) { //遍历法改进，去掉k的循环
 
 分而治之（递归式）
 
-![](Data%20Structure.assets/20200117_111255118_iOS.png)
-<img src="Data%20Structure.assets/20200117_111328530_iOS.png" style="zoom: 33%;" />
+<img src="Data%20Structure.assets/20200117_111255118_iOS.png" style="zoom:50%;" />
+<img src="Data%20Structure.assets/20200117_111328530_iOS.png" style="zoom: 25%;" />
 
 
 ```c++
@@ -127,3 +127,6 @@ int MaxSubSeqSum_4(vector<int> A) {  // 在线处理
     return maxSum;
 }
 ```
+
+## 线性表
+
