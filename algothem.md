@@ -6,7 +6,6 @@ void main() {
 	Huff = huffmanTree(H);
 	preOrderTraverse(Huff);
 }
-
 ```
 
 
