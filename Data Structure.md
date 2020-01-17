@@ -1,5 +1,5 @@
 # Data Structure
- 
+
 
 ## 知识网络
 
@@ -31,6 +31,7 @@
 **法一**
 
 遍历法，找出所有子列的和，求最大值
+<img src="Data%20Structure.assets/20200117_111218541_iOS.png" style="zoom: 50%;" align="center">
 
 ```c++
 int MaxSubSeqSum_1(vector<int> A) { // 遍历法，找出所有子列的和，求最大值
@@ -74,6 +75,10 @@ int MaxSubSeqSum_2(vector<int> A) { //遍历法改进，去掉k的循环
 
 分而治之（递归式）
 
+![](Data%20Structure.assets/20200117_111255118_iOS.png)
+<img src="Data%20Structure.assets/20200117_111328530_iOS.png" style="zoom: 33%;" />
+
+
 ```c++
 int MaxSubSeqSum_3(vector<int> A) {  //分而治之，递归式
     return divideAndConquer(A, 0, A.size() - 1);
@@ -108,7 +113,7 @@ int divideAndConquer(vector<int>& A, int left, int right) {
 ```
 
 **法四**
-在线处理
+在线处理：当前累加和小于0时就丢弃重新将tempSum归于0，继续累加。每次迭代都与当前的最大值比较。
 
 ```c++
 int MaxSubSeqSum_4(vector<int> A) {  // 在线处理
