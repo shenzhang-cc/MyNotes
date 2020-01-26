@@ -1,6 +1,5 @@
 # Data Structure
 
-[TOC]
 
 ## 知识网络
 
