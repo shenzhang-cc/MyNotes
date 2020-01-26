@@ -1,4 +1,4 @@
-# Data Structure
+# DataStructure
 
 * [DataStructure](#datastructure)
   * [知识网络](#%E7%9F%A5%E8%AF%86%E7%BD%91%E7%BB%9C)
