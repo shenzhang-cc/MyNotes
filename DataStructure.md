@@ -124,7 +124,8 @@ int divideAndConquer(vector<int>& A, int left, int right) {
         if (tempSumR > maxRightBorderSum) maxRightBorderSum = tempSumR;
     }
     maxBorderSum = maxLeftBorderSum + maxRightBorderSum;
-    return maxLeftSum > maxRightSum ? (maxLeftSum > maxBorderSum ? maxLeftSum : maxBorderSum) 
+    return maxLeftSum > maxRightSum ? 
+          (maxLeftSum > maxBorderSum ? maxLeftSum : maxBorderSum) 
         : (maxRightSum > maxBorderSum ? maxRightSum : maxBorderSum);
 }
 ```
@@ -134,7 +135,7 @@ int divideAndConquer(vector<int>& A, int left, int right) {
 
 ```c++
 int MaxSubSeqSum_4(vector<int> A) {  // 在线处理
-    int tempSum = 0, maxSum = 0;
+    int tempSum = 0, maxSum = A[0];  
     for (int i = 0; i < A.size(); i++)
     {
         tempSum += A[i];
@@ -143,6 +144,7 @@ int MaxSubSeqSum_4(vector<int> A) {  // 在线处理
     }
     return maxSum;
 }
+// maxSum不能初始化为0，比如当数组中都是负数时，就会出错了
 ```
 
 ## 线性表

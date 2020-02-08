@@ -1,7 +1,7 @@
 # LeetCode Hot 100
 
 ## [1. 两数之和](https://leetcode-cn.com/problems/two-sum/)
-<img src="LeetCode%20Hot100.assets/image-20200131210844744.png" alt="image-20200131210844744"  align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200131210844744.png" alt="image-20200131210844744"  align="left" style="zoom:80%;" />
 
 **法一：暴力法**
 
@@ -797,6 +797,128 @@ public:
 
 ## 53. 最大子序和
 
+<img src="LeetCode%20Hot100.assets/image-20200203182921853.png" alt="image-20200203182921853"  align="left"/>
+
+**暴力法**略。
+
+**法一：在线处理**
+
+每读取一个新数据，都能给出当前数据下的最大子序和
+
+```c++
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int maxSum = nums[0], tempSum = 0;
+        for (int i = 0; i < nums.size(); i++)
+        {
+            tempSum += nums[i];
+            if (tempSum > maxSum) maxSum = tempSum;
+            if (tempSum < 0) tempSum = 0;
+        }
+        return maxSum;
+    }
+};
+```
+
+*注意：*maxSum的初值
+
+**法二：动态规划**
+
+$dp[i]$表示以nums[i]为结尾的序列中的最大和，状态转移方程：
+$$
+dp[i] = max(dp[i - 1] + nums[i], nums[i])
+$$
+[力扣题解：[详细解读动态规划的实现, 易理解]](https://leetcode-cn.com/problems/maximum-subarray/solution/xiang-xi-jie-du-dong-tai-gui-hua-de-shi-xian-yi-li/)
+
+```c++
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int max_endHere = nums[0];
+        int max_soFar = nums[0];
+        for (int i = 1; i < nums.size(); i++)
+        {
+            max_endHere = max(max_endHere + nums[i], nums[i]);
+            if (max_endHere > max_soFar) 
+                max_soFar = max_endHere;
+        }
+        return max_soFar;
+    }
+};
+```
+
+**法三：分治算法**
+
+```c++
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        return divideAndConquer(nums, 0, nums.size() - 1);
+    }
+
+    int divideAndConquer(vector<int>& nums, int left, int right) {
+        if (left == right) 
+        {
+            return nums[left];
+        }
+        int center = (left + right) / 2;
+
+        int maxLeft, maxRight, maxCross;
+        // 注意maxCenLeft和maxCenRight的初值
+        int maxCenLeft = nums[center], maxCenRight = nums[center + 1];
+        int tempCenLeft = 0, tempCenRight = 0;
+
+        maxLeft = divideAndConquer(nums, left, center);
+        maxRight = divideAndConquer(nums, center + 1, right);
+        for (int i = center; i >= left; i--)
+        {
+            tempCenLeft += nums[i];
+            if (tempCenLeft > maxCenLeft) 
+                maxCenLeft = tempCenLeft;
+        }
+        for (int i = center + 1; i <= right; i++)
+        {
+            tempCenRight += nums[i];
+            if (tempCenRight > maxCenRight) 
+                maxCenRight = tempCenRight;
+        }
+        maxCross = maxCenLeft + maxCenRight;
+        return maxLeft > maxRight ?
+               (maxLeft > maxCross ? maxLeft : maxCross)
+               : (maxRight > maxCross ? maxRight : maxCross);
+    }
+
+};
+```
+
+**法四：贪心算法**
+
+对当前元素，每次都选择局部最优解，则最终得到的就是全局最优解。
+
+```c++
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int maxSum = nums[0]; // 全局最优解
+        int maxCur = nums[0]; // 当前元素对应的局部最优解
+        for (int i = 1; i < nums.size(); i++)
+        {
+            int maxTemp = 0;
+            for (int j = i; j >= 0; j--)
+            {
+                maxTemp += nums[j];
+                if (maxTemp > maxCur) maxCur = maxTemp;
+            }
+            if (maxCur > maxSum) maxSum = maxCur;
+        }
+        return maxSum;
+    }
+};
+```
+
+
+
 ## 55. 跳跃游戏
 
 ## 56. 合并区间
@@ -806,6 +928,77 @@ public:
 ## 64. 最小路径和
 
 ## 70. 爬楼梯
+
+<img src="LeetCode%20Hot100.assets/image-20200204212653962.png" alt="image-20200204212653962"  align="left" style="zoom:80%;" />
+
+**动态规划**
+
+$dp[i]$表示 $i$ 级台阶的方法数，则有两种方式到达第 $i$ 级台阶：
+
+- 第$(i - 1)$级台阶向上走一步；
+
+- 第$(i - 2)$级台阶向上走两步；
+
+所以递推关系式为：
+$$
+dp[i] = dp[i - 1] + dp[i - 2]
+$$
+
+**真正的动态规划**
+
+```c++
+class Solution {
+public:
+    int climbStairs(int n) {
+        if (n == 1) return 1;
+        vector<int> dp(n + 1);
+        dp[1] = 1;
+        dp[2] = 2;
+        for (int i = 3; i <= n; i++)
+        {
+            dp[i] = dp[i - 1] + dp[i - 2];
+        }
+        return dp[n];
+    }
+};
+```
+
+**错误版本两则：虚假的动态规划……**
+
+```c++
+有了循环，为什么还要递归哦，我这脑子在想啥……
+// class Solution {
+// public:
+//     int climbStairs(int n) {
+//         int res;
+//         if (n == 0) return 1;
+//         if (n == 1) return 1;
+//         for (int i = 2; i <= n; i++)
+//         {
+//             res = climbStairs(i - 1) + climbStairs(i - 2);
+//         }
+//         return res;
+//     }
+// };
+
+这样就只用了1和2的解，动态规划是要把利用递推关系得到的结果每次存起来，到n的时候就直接用n - 1和n - 2的值了。总不能每次都慢慢从1和2开始慢慢递推计算
+// class Solution {
+// public:
+//     int climbStairs(int n) {
+//         int res;
+//         if (n == 2) return 2;
+//         if (n == 1) return 1;
+//         res = climbStairs(n - 1) + climbStairs(n - 2);
+//         return res;
+//     }
+// };
+```
+
+
+
+
+
+
 
 ## 72. 编辑距离
 
@@ -839,6 +1032,98 @@ public:
 
 ## 121. 买卖股票的最佳时机
 
+<img src="LeetCode%20Hot100.assets/image-20200205153558132.png" alt="image-20200205153558132" style="zoom:80%;" align="left"/>
+
+**法一：动态规划**
+
+$dp[i]$表示第 $i$ 天的==最大收益==（或许这里不应该称为“最大收益”，总之就是填网格时，第 i 个格子应该填的数值），$minprice$表示前$i - 1$天的最低价格， $maxprofit$表示第$i - 1$天的最大利润。则$dp[i]$有两种可能情况：
+
+- 第 i 天卖出：$dp[i] = price[i] - minprice$
+- 第 i 天不卖出：$dp[i] = dp[i - 1]=maxprofit$
+
+状态转移方程：$dp[i] = max(第i天卖出, 第i天不卖出)$
+
+第一版
+
+```c++
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        if (prices.empty() || prices.size() == 1) return 0;
+        int maxprofitSoFar = prices[1] - prices[0], 
+            minpriceSoFar = prices[0],
+            maxprofitCur, // 相当于dp[i]
+            maxprofit = maxprofitSoFar;
+            for (int i = 1; i < prices.size(); i++)
+            {
+                if (prices[i - 1] < minpriceSoFar)
+                    minpriceSoFar = prices[i - 1];
+                maxprofitCur = max(prices[i] - minpriceSoFar, maxprofitSoFar);
+                if (maxprofitCur > maxprofit)
+                    maxprofit = maxprofitCur;
+            }
+        return maxprofit > 0 ? maxprofit : 0;
+    }
+};
+```
+
+优化版：其实只要两个变量就可以了，不需要那么多中间变量。虽然但是，对性能提升没啥卵用，看起来更优雅，嗯。
+
+```c++
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int maxprofit = 0;
+        if (!prices.empty())
+        {
+            // max_element() 返回指向vector中最大元素的迭代器
+            int minprice = *max_element(prices.begin(), prices.end());  
+            for (int i = 0; i < prices.size(); i++)
+            {
+                minprice = min(prices[i], minprice);
+                maxprofit = max(maxprofit, prices[i] - minprice);
+            }
+        }        
+        return maxprofit;
+    }
+};
+```
+
+第三版：维护一个dp数组，每个结果都保留下来，这样编码会更简单，不过因为动态规划每次只会使用临近的前一个值，这样写存在空间浪费。
+
+```c++
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        if (prices.size() <= 1) return 0;
+        vector<int> res(prices.size());
+        res[0] = 0;
+        res[1] = max(prices[1] - prices[0], res[0]);
+        int minPrice = min(prices[0], prices[1]);
+        for (int i = 2; i < prices.size(); i++)
+        {
+            if (prices[i] < minPrice)
+                minPrice = prices[i];
+            res[i] = max(res[i - 1], prices[i] - minPrice);
+        }
+        int maxValue = *max_element(res.begin(), res.end());
+        return maxValue > 0 ? maxValue : 0;
+    }
+};
+```
+
+
+
+**法二：更合理的解释，代码其实差不多**
+
+[点我看那个更合理的解释](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/solution/dui-zhe-ge-ti-de-yuan-li-lai-ge-jian-dan-de-zheng-/)
+
+```c++
+
+```
+
+
+
 ## 124. 二叉树中的最大路径和
 
 ## 128. 最长连续序列
@@ -848,6 +1133,65 @@ public:
 ## 139. 单词拆分
 
 ## 141. 环形链表
+
+## 198. 打家劫舍
+
+<img src="LeetCode%20Hot100.assets/image-20200205182201396.png" alt="image-20200205182201396" style="zoom:80%;" align="left"/>
+
+**动态规划**
+
+$f(x)$表示抢劫完前$x$间房屋所得到的总的最大金额, Ax表示第$x$间房的金额。$f(x)$的值有两种情况：
+
+- 抢第$x - 1$间房：则第无法抢第$x$间房，$f(x)=f(x - 1)$
+- 不抢第$x - 1$间房：则$f(x) = f(x - 2) + Ax$
+
+则递推公式为：$f(x) = max(f(x - 1), f(x - 2) + Ax)$
+
+边界：$f(1) = A1$
+
+​			$f(2) = max(A1, A2)$
+
+第一版：维护一整个$ dp$数组，这样编码简单，不过浪费了一定空间（因为对后面的元素，前面的记录已经用不到了）
+
+```c++
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        if (nums.empty()) return 0;
+        if (nums.size() == 1) return nums[0];
+        vector<int> maxSum(nums.size());
+        maxSum[0] = nums[0];
+        maxSum[1] = max(nums[0], nums[1]);
+        for (int i = 2; i < nums.size(); i++)
+        {
+            maxSum[i] = max(maxSum[i - 1], maxSum[i - 2] + nums[i]);
+        }
+        int res = *max_element(maxSum.begin(), maxSum.end());
+        return res;
+    }
+};
+```
+
+第二版：对每个元素来说，只需要紧挨着它的前两个位置的最大值，所以只需要两个变量就可以了（虽然看结果，对性能的提升没啥大卵用，不过优雅多了hhah）。
+
+```c++
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        int preMax = 0, curMax = 0;
+        for (int i = 0; i < nums.size(); i++)
+        {
+            int temp = curMax;
+            curMax = max(curMax, preMax + nums[i]);
+            preMax = temp;
+        }
+        return curMax;
+    }
+};
+```
+
+
+
 
 
 
