@@ -1231,6 +1231,44 @@ class Solution:
         return res
 ```
 
+## 739. 每日温度
+
+<img src="LeetCode%20Hot100.assets/image-20200208161657443.png" alt="image-20200208161657443" style="zoom:80%;" align="left"/>
+
+**法一：单调栈**
+
+设置一个单调递减的栈，栈中存的元素是给定列表中元素的下标，这里的递减是指栈中所存的下标值对应于原列表中元素的大小单调递减。对列表中的每个值，若其大于栈顶元素，就将栈顶弹出，循环操作直至该元素不再大于栈顶。也就是说只有当前元素小于栈顶元素时才能入栈，则构建出来的一定是递减栈。
+
+<img src="LeetCode%20Hot100.assets/20200208_082333141_iOS.png" style="zoom: 35%;" />
+
+> INT_MIN在标准头文件limits.h中定义
+>
+> 1.#define INT_MAX 2147483647
+>
+> 2.#define INT_MIN (-INT_MAX - 1)
+
+```c++
+class Solution {
+public:
+    vector<int> dailyTemperatures(vector<int>& T) {
+        vector<int> res(T.size(), 0);
+        if (T.empty()) return res;
+        T.push_back(INT_MIN); // 方便处理最后一个元素
+        stack<int> stk;
+        for (int i = 0; i < T.size(); i++)
+        {
+            while (!stk.empty() && T[i] > T[stk.top()])
+            {
+                res[stk.top()] = i - stk.top();
+                stk.pop();
+            }
+            stk.push(i);
+        }
+        return res;
+    }
+};
+```
+
 
 
 
