@@ -1190,6 +1190,47 @@ public:
 };
 ```
 
+## 394 字符串解码
+
+<img src="LeetCode%20Hot100.assets/image-20200208115759616.png" alt="image-20200208115759616" style="zoom:80%;" align="left"/>
+
+**法一：利用辅助栈**
+
+python支持字符串直接与整数相乘达到复制整数倍个字符串，而c++不支持。
+
+```python
+s = 'abc'
+a = 3
+s = a * s
+// 则s = 'abcabcabc'
+```
+
+
+
+<img src="LeetCode%20Hot100.assets/image-20200208120208901.png" alt="image-20200208120208901" style="zoom:80%;" />
+
+![](LeetCode%20Hot100.assets/20200208_062216667_iOS-1581143187481.png)
+
+```python
+class Solution:
+    def decodeString(self, s: str) -> str:
+        stack, res, multi = [], '', 0
+        for c in s:
+            if c == '[':
+                stack.append([res, multi])
+                res = ''
+                multi = 0
+            elif c == ']':
+                last_res, cur_multi = stack.pop() 
+                res = last_res + cur_multi * res
+            elif '0' <= c <= '9':
+                multi = multi * 10 + int(c);
+            # c为字母时
+            else: 
+                res = res + c
+        return res
+```
+
 
 
 
