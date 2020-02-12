@@ -1,6 +1,12 @@
 # LeetCode Hot 100
 
-## [1. 两数之和](https://leetcode-cn.com/problems/two-sum/)
+## tag
+
+栈：[20. 有效的括号](# 20. 有效的括号) [42. 接雨水](# 42. 接雨水)  [84. 柱状图中最大的矩形](# 84. 柱状图中最大的矩形)  [85. 最大矩形](# 85. 最大矩形)   [94. 二叉树的中序遍历](# 94. 二叉树的中序遍历)  [394. 字符串解码](# 394. 字符串解码) [739. 每日温度](# 739. 每日温度) 
+
+队列：
+
+## 1. 两数之和
 <img src="LeetCode%20Hot100.assets/image-20200131210844744.png" alt="image-20200131210844744"  align="left" style="zoom:80%;" />
 
 **法一：暴力法**
@@ -107,7 +113,7 @@ public:
 
 
 
-## [2. 两数相加](https://leetcode-cn.com/problems/add-two-numbers/)
+## 2. 两数相加
 <img src="LeetCode%20Hot100.assets/image-20200131221610304.png" alt="image-20200131221610304"  align="left"/>
 
 无需单独设置进位位的方法，另外新建立了一个存放结果的链表，有优化空间。
@@ -154,11 +160,11 @@ public:
 
 
 
-## [3. 无重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/)
+## 3. 无重复字符的最长子串
 
 <img src="LeetCode%20Hot100.assets/image-20200201094422861.png" alt="image-20200201094422861" style="zoom:100%;" align="left"/>
 
-**利用向量实现的滑动窗口：**
+**法一：利用向量实现的滑动窗口：**
 
 对每一个传入字符串的字符与vector中的所有内容进行比较，无重复则将字符存入vector末尾，有重复则先更新不重复字符串最大值mlen，再将vector中的重复字符即其之前的内容删掉，返回mlen。
 
@@ -195,7 +201,7 @@ public:
 };
 ```
 
-**双指针法**
+**法二：双指针法**
 
 再s的字符数量大于等于2个的时候，用头指针、尾指针指针分别指向s的开头和其开头+1，扫描两指针之间的字符并与尾指针进行对比，根据对比情况移动指针。
 这期间只有两种情况，1：范围[头,尾)之间有跟尾字符重复的字符；2：没有。
@@ -238,7 +244,7 @@ public:
 
 
 
-## [4. 寻找两个有序数组的中位数](https://leetcode-cn.com/problems/median-of-two-sorted-arrays/)
+## 4. 寻找两个有序数组的中位数
 
 <img src="LeetCode%20Hot100.assets/image-20200201162400220.png" alt="image-20200201162400220" style="zoom:100%;" align="left"/>
 
@@ -573,7 +579,9 @@ public:
 
 
 
-## 20. 有效的括号
+## 20. 有效的括号 
+
+[回到tag](# tag)
 
 <img src="LeetCode%20Hot100.assets/image-20200201174255381.png" alt="image-20200201174255381"  align="left"/>
 
@@ -788,6 +796,51 @@ public:
 ## 39. 组合总和
 
 ## 42. 接雨水
+
+[回到tag](# tag)
+
+<img src="LeetCode%20Hot100.assets/image-20200212205627917.png" alt="image-20200212205627917" style="zoom:80%;" align="left"/>
+
+**法一：递减栈**
+
+维护一个递减栈：
+
+- 当前墙的高度小于栈顶墙的高度时，就入栈；
+- 当前墙的高度大于栈顶墙的高度时，则说明之前的积水到这里停下了。出栈，然后计算以这个出栈的墙的高度为“洼地”，当前墙与新栈顶的墙为边界所构成的一个“坑”中的水量。
+
+**注意：**此题的栈是递减栈，与[第84题](# 84. 柱状图中最大的矩形)的“递增栈”对比，不能再通过给输入数组首部添“0”的方式来处理。
+
+```c++
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        if (height.empty()) return 0;
+        // 与“递增栈”对比，添0的方式不能用喽
+        // height.insert(height.begin(), 0);
+        stack<int> stk;
+        int sum = 0;
+        int left = 0, right = 0, prevH = 0;
+        for (int i = 0; i < height.size(); i++)
+        {
+            while (!stk.empty() && height[i] > height[stk.top()])
+            {
+                prevH = height[stk.top()];
+                stk.pop();
+                // 栈为空时，跳出循环
+                if (stk.empty()) continue;
+                right = i;
+                left = stk.top();
+                int temp = min(height[left], height[right]) - prevH;
+                sum = sum + temp * (right - left - 1);
+            }
+            stk.push(i);
+        }
+        return sum;   
+    }
+};
+```
+
+
 
 ## 46. 全排列
 
@@ -1012,9 +1065,124 @@ public:
 
 ## 84. 柱状图中最大的矩形
 
+[回到tag](# tag)
+
+<img src="LeetCode%20Hot100.assets/image-20200210173049054.png" alt="image-20200210173049054" style="zoom:80%;" align="left"/>
+
+<img src="LeetCode%20Hot100.assets/image-20200210173216816.png" alt="image-20200210173216816" style="zoom:80%;" align="left"/>
+
+**分析**
+
+![image-20200210173445680](LeetCode%20Hot100.assets/image-20200210173445680.png)
+
+**法一：递增栈**
+
+利用一个栈存储元素的下标，构造一个递增栈（栈中所存的下标对应的柱状图的高度递增），这样对栈中的每个元素，当其作为“最矮”的柱状图，计算矩形面积时， left _i 就是栈中紧挨着它的下一个元素的值。而 right_i 就是遍历过程中发现的比栈顶元素代表的柱状图的高度小的柱状图。好像怎么都描述不清……看图：
+
+<img src="LeetCode%20Hot100.assets/20200210_093925822_iOS.png" style="zoom:50%;" />
+
+```c++
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        if (heights.empty()) return 0;
+        // 先将输入的高度的数组，前后各添加一个0。
+        // 前面添的0相当于给所有元素添加一个初始的left_i
+        // 末尾添的0，便于将栈中剩余的元素全部弹出并计算其面积
+        heights.insert(heights.begin(), 0);
+        heights.insert(heights.end(), 0);
+        int res = 0;
+        stack<int> stk;
+        for (int i = 0; i < heights.size(); i++)
+        {
+            while (!stk.empty() && heights[i] < heights[stk.top()])
+            {
+                int temp = stk.top();
+                stk.pop();
+                res = max(res, heights[temp] * (i - stk.top() - 1));
+            }
+            stk.push(i);
+        }
+        return res;
+    }
+};
+```
+
+优化版：将0先直接添加到栈中，就可以使得循环中少一个判空的判断。经测试，肉眼可见的提升了运算速度。
+
+```c++
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        if (heights.empty()) return 0;
+        heights.insert(heights.begin(), 0);
+        heights.insert(heights.end(), 0);
+        int res = 0;
+        stack<int> stk;
+        stk.push(0);
+        for (int i = 1; i < heights.size(); i++)
+        {
+            while (heights[i] < heights[stk.top()])
+            {
+                int temp = stk.top();
+                stk.pop();
+                res = max(res, heights[temp] * (i - stk.top() - 1));
+            }
+            stk.push(i);
+        }
+        return res;
+    }
+};
+```
+
+
+
 ## 85. 最大矩形
 
+[回到tag](# tag)
+
+<img src="LeetCode%20Hot100.assets/image-20200210200110018.png" alt="image-20200210200110018" style="zoom:80%;" align="left"/>
+
+**法一：套用LeetCode 84的算法**
+
+观察下图橙色部分，可发现与84题一样。则可以调用84题的函数，分别求最大面积，而后比较得出全局最大值即可。其中的height数组可通过向下遍历行，逐步更新。
+
+<img src="LeetCode%20Hot100.assets/image-20200210200247715.png" alt="image-20200210200247715" style="zoom:80%;" />
+
+```python
+class Solution:
+    def maximalRectangle(self, matrix: List[List[str]]) -> int:
+        if not matrix: return 0
+        dp = [0] * len(matrix[0])
+        maxarea = 0
+        for i in range(len(matrix)):
+            for j in range(len(matrix[0])):
+                # 更新height数组的关键语句
+                dp[j] = dp[j] + 1 if matrix[i][j] == "1" else 0
+            maxarea = max(maxarea, self.leetcode84(dp))
+        return maxarea
+
+    def leetcode84(self, height: List[int]) -> int:
+        if not height: return 0
+        height = [0] + height + [0]
+        maxarea = 0
+        stk = []
+        stk.append(0)
+        for i in range(1, len(height)):
+            while height[i] < height[stk[-1]]:
+                temp = stk.pop()
+                maxarea = max(maxarea, height[temp] * (i - stk[-1] - 1))
+            stk.append(i)
+        return maxarea
+```
+
+
+
 ## 94. 二叉树的中序遍历
+
+[回到tag](# tag)
+
+
 
 ## 96. 不同的二叉搜索树
 
@@ -1192,6 +1360,8 @@ public:
 
 ## 394 字符串解码
 
+[回到tag](# tag)
+
 <img src="LeetCode%20Hot100.assets/image-20200208115759616.png" alt="image-20200208115759616" style="zoom:80%;" align="left"/>
 
 **法一：利用辅助栈**
@@ -1233,19 +1403,15 @@ class Solution:
 
 ## 739. 每日温度
 
+[回到tag](# tag)
+
 <img src="LeetCode%20Hot100.assets/image-20200208161657443.png" alt="image-20200208161657443" style="zoom:80%;" align="left"/>
 
-**法一：单调栈**
+**法一：递减栈**
 
 设置一个单调递减的栈，栈中存的元素是给定列表中元素的下标，这里的递减是指栈中所存的下标值对应于原列表中元素的大小单调递减。对列表中的每个值，若其大于栈顶元素，就将栈顶弹出，循环操作直至该元素不再大于栈顶。也就是说只有当前元素小于栈顶元素时才能入栈，则构建出来的一定是递减栈。
 
 <img src="LeetCode%20Hot100.assets/20200208_082333141_iOS.png" style="zoom: 35%;" />
-
-> INT_MIN在标准头文件limits.h中定义
->
-> 1.#define INT_MAX 2147483647
->
-> 2.#define INT_MIN (-INT_MAX - 1)
 
 ```c++
 class Solution {
@@ -1269,7 +1435,11 @@ public:
 };
 ```
 
-
+> INT_MIN在标准头文件limits.h中定义
+>
+> 1.#define INT_MAX 2147483647
+>
+> 2.#define INT_MIN (-INT_MAX - 1)
 
 
 
