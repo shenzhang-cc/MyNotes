@@ -6,6 +6,12 @@
 
 队列：
 
+堆：[23. 合并k个排序链表](# 23. 合并k个排序链表) [215. 数组中的第k个最大元素](# 215. 数组中的第k个最大元素) 
+
+排序：[23. 合并k个排序链表](# 23. 合并k个排序链表) [215. 数组中的第k个最大元素](# 215. 数组中的第k个最大元素)
+
+动态规划：[42. 接雨水](# 42. 接雨水) [239. 滑动窗口最大值](# 239. 滑动窗口最大值)
+
 ## 1. 两数之和
 <img src="LeetCode%20Hot100.assets/image-20200131210844744.png" alt="image-20200131210844744"  align="left" style="zoom:80%;" />
 
@@ -785,6 +791,108 @@ public:
 
 ## 23. 合并K个排序链表
 
+[回到tag](# tag)
+
+<img src="LeetCode%20Hot100.assets/image-20200214190109146.png" alt="image-20200214190109146" style="zoom:80%;" align="left"/>
+
+**法一：最小堆**
+
+时间：O(nlogk)  空间：O(k)
+
+- 把所有的不为空的头结点都放到一个最小堆中。
+- 弹出堆顶元素，接到新链表的尾部，若该节点还有next，把其放进堆中（堆中永远维持着最小的k个节点）。直到堆空为止。
+**注意：针对自定义的数据类型构造堆的方法**
+
+版本一：使用lambda表达式的方式构造堆。
+```c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    typedef function<bool(const ListNode*, const ListNode*)> Compare;
+    
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        if (lists.size() == 0) return NULL;
+        // lambda表达式
+        Compare cmp = [](const ListNode *a, const ListNode *b) {
+            return a->val > b->val;
+        };
+        priority_queue<ListNode*, vector<ListNode*>, Compare> q(cmp);
+        
+        
+        for (auto& p: lists) {
+            if (p) q.push(p);
+        }
+        
+        ListNode *dummy = new ListNode(-1);
+        auto tail = dummy;
+        
+        while (!q.empty()) {
+            auto cur = q.top(); q.pop();
+            if (cur->next) q.push(cur->next);
+            tail->next = cur;
+            tail = cur;
+        }
+        return dummy->next;
+    }
+};
+```
+
+版本二：另一种构造最小堆的写法
+
+```c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    struct cmp {
+        bool operator () (const ListNode* l1, const ListNode* l2) 
+        {return l1->val > l2->val;}
+    };
+
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        if (lists.size() == 0) return NULL;
+        priority_queue<ListNode*, vector<ListNode*>, cmp> q;
+        for (int i = 0; i < lists.size(); i++)
+        {
+            if (lists[i]) q.push(lists[i]); 
+        }
+        ListNode* res = new ListNode(-1);
+        ListNode* tail = res;
+        while (!q.empty())
+        {
+            ListNode* cur = q.top(); q.pop();
+            if (cur->next != NULL) q.push(cur->next);
+            tail->next = cur;
+            tail = cur;
+        }
+        return res->next;
+    }
+};
+```
+
+
+
+
+
+**法二：转化为合并两个有序链表**
+
+**法三：排序**
+
+
+
 ## 31. 下一个排列
 
 ## 32. 最长有效括号
@@ -858,7 +966,7 @@ public:
 
 每读取一个新数据，都能给出当前数据下的最大子序和
 
-```c++
+​```c++
 class Solution {
 public:
     int maxSubArray(vector<int>& nums) {
@@ -1358,7 +1466,115 @@ public:
 };
 ```
 
-## 394 字符串解码
+## 215. 数组中的第k个最大元素
+
+[回到tag](# tag) 
+
+<img src="LeetCode%20Hot100.assets/image-20200213163239649.png" alt="image-20200213163239649" style="zoom:80%;" align="left"/>
+
+**法一：最小堆**
+
+维持一个包含k个元素的最小堆，每新加入一个元素，就pop一次，则最终遍历完数组后，留在最小堆中的k个元素中，堆顶是最小值，其他值均比栈顶大。则栈顶元素是原数组中的第k个最大值。
+
+<img src="LeetCode%20Hot100.assets/20200213_080343074_iOS.png" style="zoom: 40%;" />
+
+```c++
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        priority_queue<int, vector<int>, greater<int>> q;
+        for (auto it : nums)
+        {
+            q.push(it);
+            if (q.size() > k) q.pop();
+        }
+        return q.top();
+    }
+};
+```
+
+## 239. 滑动窗口最大值
+
+[回到tag](# tag) 
+
+<img src="LeetCode%20Hot100.assets/image-20200213211252734.png" alt="image-20200213211252734" style="zoom:90%;" align="left"/>
+
+**法一：暴力法**
+
+遍历出所有的滑动窗口，分别求出最大值。时间复杂度为为$O(Nk)$.
+
+```c++
+class Solution {
+public:
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        vector<int> res;
+        int i = 0, j = i + k - 1;
+        while (j < nums.size())
+        {
+            int temp = nums[i];
+            for (int m = i; m <= j; m++)
+            {
+                if (nums[m] > temp)
+                    temp = nums[m];
+            }
+            res.push_back(temp);
+            i++;
+            j++;
+        }
+        return res;
+    }
+};
+```
+
+**法二：索引堆**
+
+**法三：动态规划**
+
+**法四：双向队列**
+
+## 347. 前k个高频元素
+
+<img src="LeetCode%20Hot100.assets/image-20200214202749879.png" alt="image-20200214202749879" style="zoom:80%;" align="left"/>
+
+**法一：map+minHeap**
+
+先用map建立数组中元素与出现次数之间的映射关系，然后维护一个包含k个元素的小顶堆。**注意针对哈希表中的元素建立小顶堆的方式**
+
+```c++
+class Solution {
+public:
+    struct cmp {
+        bool operator () (const pair<int, int>& a, const pair<int, int>& b)
+        {return a.second > b.second;}
+    };
+
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        map<int, int> m;
+        vector<int> res;
+        for (auto a : nums)
+        {
+            m[a]++;
+        }
+        priority_queue<pair<int, int>, vector<pair<int, int>>, cmp> q;
+        for (auto b : m)
+        {
+            q.push(b);
+            if (q.size() > k) q.pop();
+        }
+        while (!q.empty())
+        {
+            res.push_back(q.top().first);
+            q.pop();
+        }
+        reverse(res.begin(), res.end());
+        return res;
+    }
+};
+```
+
+
+
+## 394. 字符串解码
 
 [回到tag](# tag)
 
