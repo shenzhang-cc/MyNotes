@@ -6,11 +6,13 @@
 
 队列：
 
+双指针：11. 盛水最多的容器
+
 堆：[23. 合并k个排序链表](# 23. 合并k个排序链表) [215. 数组中的第k个最大元素](# 215. 数组中的第k个最大元素) 
 
 排序：[23. 合并k个排序链表](# 23. 合并k个排序链表) [215. 数组中的第k个最大元素](# 215. 数组中的第k个最大元素)
 
-动态规划：[42. 接雨水](# 42. 接雨水) [239. 滑动窗口最大值](# 239. 滑动窗口最大值)
+动态规划：[42. 接雨水](# 42. 接雨水) [198. 打家劫舍](# 198. 打家劫舍) [239. 滑动窗口最大值](# 239. 滑动窗口最大值) [337. 打家劫舍III](# 337. 打家劫舍III)
 
 ## 1. 两数之和
 <img src="LeetCode%20Hot100.assets/image-20200131210844744.png" alt="image-20200131210844744"  align="left" style="zoom:80%;" />
@@ -346,6 +348,36 @@ private:
 ## 10. 正则表达式匹配
 
 ## 11. 盛水最多的容器
+
+<img src="LeetCode%20Hot100.assets/image-20200221185543027.png" alt="image-20200221185543027" style="zoom:80%;" align="left"/>
+
+**法一：暴力法** 略
+
+**法二：双指针法**
+
+左、右两个指针分别指向数组的首元素、末元素，计算当前范围内的水量。之后将左右两个端点中高度==较矮==的那个向前移动一步，再次计算水量。如此迭代直到遍历整个数组。设置变量保存出现过的最大值，每步迭代时进行更新。
+
+选择移动较矮的是因为当前两端点的距离已经是最大值了，后续步骤中距离只会变得更小。而当前的主要制约因素是高度较矮的一端，如果保持高度矮的不变，移动较高的一端，那么无论下个值得高度是更大或是更小，水量都只会变小。
+
+```c++
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        int l = 0, r = height.size() - 1;
+        int maxArea = 0;
+        while (l < r)
+        {
+            int curArea = min(height[l], height[r]) * (r - l);
+            maxArea = max(maxArea, curArea);
+            if (height[l] < height[r]) l++;
+            else r--;
+        }
+        return maxArea;
+    }
+};
+```
+
+
 
 ## 15. 三数之和
 
@@ -895,9 +927,52 @@ public:
 
 ## 31. 下一个排列
 
+<img src="LeetCode%20Hot100.assets/image-20200222120741816.png" alt="image-20200222120741816" style="zoom:80%;" align="left"/>
+
+**算法：**
+
+- 设置两个变量$i，j$，从后向前查找第一对满足$n[i] < n[j]$的元素。
+- 则$[j, end]$一定是一个降序，从其中找到第一个满足$n[k] > n[i]$的元素
+- 交换n[k]、n[i]，此时的[j,  end]一定还是降序序列
+- 将[j, end]重新排序为升序
+
+[参考题解](https://leetcode-cn.com/problems/next-permutation/solution/xia-yi-ge-pai-lie-suan-fa-xiang-jie-si-lu-tui-dao-/)
+
+```c++
+class Solution {
+public:
+    void nextPermutation(vector<int>& nums) {
+        int i = nums.size() - 2, j = nums.size() - 1;
+        while (i >= 0)
+        {
+            if (nums[i] < nums[j]) break;
+            i--;
+            j--;
+        }
+        if (i < 0)
+        {
+            reverse(nums.begin(), nums.end());
+            return;
+        }
+        int k = nums.size() - 1;
+        while (nums[k] <= nums[i])
+        {
+            k--;
+        }
+        int temp = nums[k];
+        nums[k] = nums[i];
+        nums[i] = temp;
+        sort(nums.begin() + j, nums.end());
+        return;
+    }
+};
+```
+
+
+
 ## 32. 最长有效括号
 
-## 33. 搜索旋转排序数组
+## 33. 搜索旋转排序数
 
 ## 34. 在排序数组中查找元素的第一个和最后一个位置
 
@@ -966,7 +1041,7 @@ public:
 
 每读取一个新数据，都能给出当前数据下的最大子序和
 
-​```c++
+```c++
 class Solution {
 public:
     int maxSubArray(vector<int>& nums) {
@@ -1024,12 +1099,12 @@ public:
             return nums[left];
         }
         int center = (left + right) / 2;
-
+    
         int maxLeft, maxRight, maxCross;
         // 注意maxCenLeft和maxCenRight的初值
         int maxCenLeft = nums[center], maxCenRight = nums[center + 1];
         int tempCenLeft = 0, tempCenRight = 0;
-
+    
         maxLeft = divideAndConquer(nums, left, center);
         maxRight = divideAndConquer(nums, center + 1, right);
         for (int i = center; i >= left; i--)
@@ -1107,7 +1182,7 @@ $$
 
 **真正的动态规划**
 
-```c++
+​```c++
 class Solution {
 public:
     int climbStairs(int n) {
@@ -1294,9 +1369,123 @@ class Solution:
 
 ## 96. 不同的二叉搜索树
 
+<img src="LeetCode%20Hot100.assets/image-20200219203745115.png" alt="image-20200219203745115" style="zoom:80%;" align="left"/>
+
+**法一：动态规划**
+
+动态规划其实就是数学里的那种递推关系。不过难点在于找出这个递推关系吧，其实编码实现多写几次也挺简单的。不过就是熟练之后，可以写的更漂亮、优雅，也就是只维持求下一个f（i）所需的必需的值，而不是维持整个数组。
+
+对于每一个根i他都是由左边子树（1, 2, ..., i - 1)和右边子树（i + 1, i + 2, ..., n)组成的。因此他的个数肯定是两个子树情况的积。而且，这种根一共有n个，再将这些加起来就可以了。
+
+此题是“明安图数”，也叫“卡特兰数”，有现成的递推公式可用：
+
+<img src="LeetCode%20Hot100.assets/image-20200219204545996.png" alt="image-20200219204545996" style="zoom:80%;" />
+
+```c++
+class Solution {
+public:
+    int numTrees(int n) {
+        long count = 1;
+        for (int i = 0; i < n; i++)
+        {
+            count = count * 2 * (2 * i + 1) / (i + 2);
+        }
+        return count;
+    }
+};
+```
+
+
+
 ## 98. 验证二叉搜索树
 
+<img src="LeetCode%20Hot100.assets/image-20200219204943184.png" alt="image-20200219204943184" style="zoom:80%;" align="left"/>
+
+利用二叉树搜索树的性质，中序遍历：左-根-右，因为是二叉搜索树，则所得到的的序列一定是递增序列。要注意的是int类型的变量上下限为：INT_MAX = 2147483647, INT_MIN = -INT_MAX - 1
+
+> C++中int类型是32位的，范围是-2147483648到2147483647 。 
+ （1）最轻微的上溢是INT_MAX + 1 :结果是 INT_MIN; 
+ （2）最严重的上溢是INT_MAX + INT_MAX :结果是-2; 
+ （3）最轻微的下溢是INT_MIN - 1:结果是是INT_MAX; 
+ （4）最严重的下溢是INT_MIN +  INT_MIN:结果是0 。
+
+所以此时的preValue的初值要使用LONG_MIN。确保这个边界初值小于所有int变量。
+
+**法一：迭代**
+
+```c++
+class Solution {
+public:
+    bool isValidBST(TreeNode* root) {
+        if (root == NULL ) return true;
+        long preValue = LONG_MIN;
+        stack<TreeNode*> stk;
+        TreeNode* cur = root;
+        while (cur || !stk.empty())
+        {
+            while (cur)
+            {
+            stk.push(cur);
+            cur = cur->left;
+            }
+            if (!stk.empty())
+            {
+                cur = stk.top();
+                stk.pop();
+                if (cur->val > preValue) 
+                    preValue = cur->val;
+                else return false;
+                cur = cur->right;
+            }
+        }
+        return true;
+    }
+};
+```
+
+
+
 ## 101. 对称二叉树
+
+<img src="LeetCode%20Hot100.assets/image-20200219200021830.png" alt="image-20200219200021830" style="zoom:80%;" align="left"/>
+
+**思路：**检查二叉树是否对称，满足：
+
+- p->val == q->val
+- p的左子树 = q的右子树， p的右子树 = q的左子树
+
+**法一：递归**
+
+```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isSymmetric(TreeNode* root) {
+        if (root == NULL) return true;
+        return isMirror(root->left, root->right);
+    }
+
+    bool isMirror(TreeNode* p, TreeNode* q) {
+        if (p==NULL && q==NULL) return true;
+        if (p==NULL || q==NULL) return false;
+        if ((p->val == q->val) 
+            && isMirror(p->left, q->right) 
+            && isMirror(p->right, q->left))
+            return true;
+        return false;
+    }
+};
+```
+
+
 
 ## 102. 二叉树的层次遍历
 
@@ -1304,7 +1493,81 @@ class Solution:
 
 ## 105. 从前序与中序遍历序列构造二叉树
 
+<img src="LeetCode%20Hot100.assets/image-20200219200624937.png" alt="image-20200219200624937" style="zoom:80%;" align="left"/>
+
+**法一：递归构建**
+
+[参考的题解](https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/solution/di-gui-gou-jian-by-yanyufang/)
+
+与求第k小时的编码策略类似。
+
+```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        int p_len = preorder.size(), i_len = inorder.size();
+        if (p_len == 0 || i_len == 0) return NULL;
+        return construct(preorder, 0, p_len - 1, inorder, 0, i_len - 1);
+    }
+    TreeNode* construct(vector<int>& preorder, int p_start, int p_end, vector<int>& inorder, int i_start, int i_end) {
+        TreeNode* root = new TreeNode(preorder[p_start]);
+        int root_pos = i_start;
+        while (root_pos <= i_end && inorder[root_pos] != preorder[p_start])
+            root_pos++;
+        int lenL = root_pos - i_start,
+            lenR = i_end - root_pos;
+        if (lenL > 0)
+        root->left = construct(preorder, p_start + 1, p_start + lenL, inorder, i_start, i_start + lenL - 1);
+        if (lenR > 0)
+        root->right = construct(preorder, p_start + lenL + 1, p_end, inorder, i_start + lenL + 1, i_end);
+        return root;
+    }
+};
+```
+
+
+
 ## 114. 二叉树展开为链表
+
+<img src="LeetCode%20Hot100.assets/image-20200219202123486.png" alt="image-20200219202123486" style="zoom:80%;" align="left"/>
+
+**法一（可能不是原地）**
+
+可以看到题目的链表节点顺序是中序遍历，故可以先中序遍历树，将节点存储在数组中，之后再一个个修改节点指针的指向即可。不过，==这种算法到底算不算原地展开呢。==
+
+```c++
+class Solution {
+    vector<TreeNode*> m_nodes;
+public:
+	void preOrder(TreeNode* root){
+		if(!root) return;
+		m_nodes.push_back(root);
+		preOrder(root->left);
+		preOrder(root->right);
+	}
+    void flatten(TreeNode* root)
+    {
+    	if(!root) return;
+    	preOrder(root); // push the sorted nodes into vector<TreeNode*> m_nodes
+    	for(int i = 0; i < m_nodes.size(); ++i) {
+            m_nodes[i]->right = i + 1 < m_nodes.size() ? m_nodes[i + 1] : NULL;
+            m_nodes[i]->left = NULL;
+    	}
+        return;
+    }
+};
+```
+
+
 
 ## 121. 买卖股票的最佳时机
 
@@ -1412,6 +1675,8 @@ public:
 
 ## 198. 打家劫舍
 
+[回到tag](# tag) 
+
 <img src="LeetCode%20Hot100.assets/image-20200205182201396.png" alt="image-20200205182201396" style="zoom:80%;" align="left"/>
 
 **动态规划**
@@ -1493,6 +1758,28 @@ public:
 };
 ```
 
+## 226. 翻转二叉树
+
+<img src="LeetCode%20Hot100.assets/image-20200219201837656.png" alt="image-20200219201837656" style="zoom:80%;" align="left"/>
+
+**法一：递归**
+
+```c++
+class Solution {
+public:
+    TreeNode* invertTree(TreeNode* root) {
+        if (root == NULL) return NULL;
+        TreeNode* L = invertTree(root->left);
+        TreeNode* R = invertTree(root->right);
+        root->left = R;
+        root->right = L;
+        return root;
+    }
+};
+```
+
+
+
 ## 239. 滑动窗口最大值
 
 [回到tag](# tag) 
@@ -1531,6 +1818,39 @@ public:
 **法三：动态规划**
 
 **法四：双向队列**
+
+## 337. 打家劫舍III
+
+<img src="LeetCode%20Hot100.assets/image-20200219215447370.png" alt="image-20200219215447370" style="zoom:80%;" align='left'/>
+
+**法一：动态规划、DFS、递归**
+
+对每个节点，都有选和不选两种情况：
+
+- 情况一：选择当前节点。则此节点的左右儿子节点都不能选。最大值就是当前节点加上其左右儿子为当前节点时情况二的值。
+- 情况二：不选择当前节点。则此时其左右儿子节点可选可不选。最大值应该是左右儿子为当前节点时，情况一和情况二中最大值的值相加。即：maxSum = max( 左儿子情况一， 左儿子情况二) + max(右儿子情况一， 右儿子情况二)。
+
+[参考题解：用pair的写法](https://leetcode-cn.com/problems/house-robber-iii/)
+
+```c++
+class Solution {
+public:
+    int rob(TreeNode* root) {
+        auto res = dfs(root);
+        return max(res.first, res.second);
+    }
+    pair<int, int> dfs(TreeNode* root) {
+        if (root == NULL) return {0, 0};
+        auto left = dfs(root->left);
+        auto right = dfs(root->right);
+        return {root->val + left.second + right.second, 
+                max(left.first, left.second) + max(right.first, right.second)};
+    }
+
+};
+```
+
+
 
 ## 347. 前k个高频元素
 
@@ -1616,6 +1936,146 @@ class Solution:
                 res = res + c
         return res
 ```
+
+## 538. 把二叉搜索树转化为累加树
+
+<img src="LeetCode%20Hot100.assets/image-20200219203445648.png" alt="image-20200219203445648" style="zoom:80%;" align="left"/>
+
+**法一：反中序遍历**
+
+右-根-左的顺序遍历树。不断累加右子树节点的值。
+
+```c++
+class Solution {
+public:
+    TreeNode* convertBST(TreeNode* root) {
+        int d = 0;
+        antiInorder(root, d);
+        return root;
+    }
+    void antiInorder(TreeNode* root, int& d)
+    {
+        if (root == NULL) return;
+        antiInorder(root->right, d);
+        d += root->val;
+        root->val = d;
+        antiInorder(root->left, d);
+    }
+};
+```
+
+
+
+## 560. 和为K的子数组
+
+<img src="LeetCode%20Hot100.assets/image-20200222163624768.png" alt="image-20200222163624768" style="zoom:80%;" align="left"/>
+
+**法一：暴力法**  找出所有可能的数组，分别计算和。==超时==
+
+**法二：优化的暴力法**
+
+没必要每次重新计算子数组的和，对于同一个start，迭代end，每一个新的end对应的sum为上一个sum加上当前新增的元素。
+
+相比最开始的暴力法，省去了每次单独计算子数组和的$O(n)$时间
+
+```c++
+class Solution {
+public:
+    int subarraySum(vector<int>& nums, int k) {
+        int count = 0;
+        for (int i = 0; i < nums.size(); i++)
+        {
+            int sum = 0;
+            for (int j = i; j < nums.size(); j++)
+            {
+                sum += nums[j];
+                if (sum == k) count++;
+            }
+        }
+        return count;
+    }
+};
+```
+
+**法三：哈希表**
+
+若$sum[j] - k = sum[i]$，则 [i, j]间的元素和为k。利用哈希表存储{ ${sum_i, times}$}。其中times为每个累加和出现的次数。对每一个新的累加和，检验其减k之后的值是否存在哈希表中，如存在，则将对应的次数加到计数变量上。再将当前的sum值记录入表。==注意要先检验再添加记录。==
+
+```c++
+class Solution {
+public:
+    int subarraySum(vector<int>& nums, int k) {
+        map<int, int> mp;
+        int count = 0;
+        int sum = 0;
+        mp[0] = 1;
+        for (int i = 0; i < nums.size(); i++)
+        {
+            sum += nums[i];
+            // find()返回指向给定元素的迭代器，若元素不在表中，则返回尾后迭代器
+            if (mp.find(sum - k) != mp.end()) count += mp[sum - k];
+            mp[sum]++;
+        }
+        return count;
+    }
+};
+```
+
+
+
+## 581. 最短无序连续子数组
+
+<img src="LeetCode%20Hot100.assets/image-20200222180627430.png" alt="image-20200222180627430" style="zoom:80%;" align="left"/>
+
+**法一：排序**
+
+最简单的一个方法：额外复制一个数组，将其排序后与原数组对比，从两边向内寻找，分别找到第一个与原数组不同的元素，进而确定左右边界。
+
+```c++
+class Solution {
+public:
+    int findUnsortedSubarray(vector<int>& nums) {
+        vector<int> sorted_nums = nums;
+        sort(sorted_nums.begin(), sorted_nums.end());
+        int i = 0, j = nums.size() - 1;
+        while (i <= j && nums[i] == sorted_nums[i])
+            i++;
+        if (i > j) return 0;
+        while (nums[j] == sorted_nums[j])
+            j--;
+        return j - i + 1;
+    }
+};
+```
+
+
+
+## 617. 合并二叉树
+
+<img src="LeetCode%20Hot100.assets/image-20200219202720388.png" alt="image-20200219202720388" style="zoom:80%;" align="left"/>
+
+**法一：递归**
+
+- p、q都不为空时，返回p->val + q->val;
+- 其中一个节点不空时，谁不空返回谁
+- 都空时随便返回一个
+
+```c++
+class Solution {
+public:
+    TreeNode* mergeTrees(TreeNode* t1, TreeNode* t2) {
+        // 以t1为基础，将t2合并到t1上
+        if (t1 == NULL) return t2;
+        if (t2 == NULL) return t1;
+        t1->val = t1->val + t2->val;
+        t1->left = mergeTrees(t1->left, t2->left);
+        t1->right = mergeTrees(t1->right, t2->right);
+        return t1;
+    }
+};
+```
+
+
 
 ## 739. 每日温度
 

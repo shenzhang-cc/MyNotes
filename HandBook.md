@@ -1,4 +1,4 @@
-# Personal HandBook
+# Personal HandBook(c++)
 
 ## 常用
 ### 调用类（实例化类）的两种方式
@@ -83,4 +83,21 @@ priority_queue<int, vector<int>, greater<int> > q_max;
 >     ^
 >cc1plus: some warnings being treated as errors
 
-给函数最后添加一句“return”（虽然可能用不上）
+**解决办法：**给函数最后添加一句“return”（虽然可能用不上）
+
+# Personal HandBook(python)
+
+## 批量初始化
+
+```python
+a, b, c, d = [0] * 4
+```
+
+注意，不能利用这种写法用于对象的赋值。
+
+```python
+from tkinter import*
+a, b, c, d = [Entry()] * 4
+// 此时的a、b、c、d其实指的是一个对象
+```
+
