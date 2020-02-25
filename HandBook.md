@@ -32,6 +32,9 @@ INT_MIN在标准头文件limits.h中定义
 
 - 插入元素：insert(a, b)，其中a是迭代器，b是要插入的元素；
 - 反转链表：reverse(a, b)，a、b为迭代器，指示要反转的元素范围
+- 删除元素：erase()，有两种形式——
+    - 1.iterator erase(iterator position);//删除当前位置的元素。
+    - 2.iterator erase(iterator first, iterator last);//删除当前区间的元素。
 
 ## 栈
 
