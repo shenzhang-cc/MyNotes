@@ -2,15 +2,21 @@
 
 ## tag
 
+数组：
+
 栈：[20. 有效的括号](# 20. 有效的括号) [42. 接雨水](# 42. 接雨水)  [84. 柱状图中最大的矩形](# 84. 柱状图中最大的矩形)  [85. 最大矩形](# 85. 最大矩形)   [94. 二叉树的中序遍历](# 94. 二叉树的中序遍历)  [394. 字符串解码](# 394. 字符串解码) [739. 每日温度](# 739. 每日温度) 
 
 队列：
 
-双指针：11. 盛水最多的容器
+树：
 
 堆：[23. 合并k个排序链表](# 23. 合并k个排序链表) [215. 数组中的第k个最大元素](# 215. 数组中的第k个最大元素) 
 
-排序：[23. 合并k个排序链表](# 23. 合并k个排序链表) [215. 数组中的第k个最大元素](# 215. 数组中的第k个最大元素)
+图：[56. 合并区间]()
+
+双指针：[11. 盛水最多的容器]()
+
+排序：[23. 合并k个排序链表](# 23. 合并k个排序链表)  [75. 颜色分类]() [215. 数组中的第k个最大元素](# 215. 数组中的第k个最大元素)
 
 动态规划：[42. 接雨水](# 42. 接雨水) [198. 打家劫舍](# 198. 打家劫舍) [239. 滑动窗口最大值](# 239. 滑动窗口最大值) [337. 打家劫舍III](# 337. 打家劫舍III)
 
@@ -1182,7 +1188,7 @@ $$
 
 **真正的动态规划**
 
-​```c++
+```c++
 class Solution {
 public:
     int climbStairs(int n) {
@@ -1264,7 +1270,7 @@ public:
 
 <img src="LeetCode%20Hot100.assets/20200210_093925822_iOS.png" style="zoom:50%;" />
 
-```c++
+​```c++
 class Solution {
 public:
     int largestRectangleArea(vector<int>& heights) {
@@ -1774,6 +1780,46 @@ public:
         root->left = R;
         root->right = L;
         return root;
+    }
+};
+```
+
+
+
+## 238. 除自身以外数组的乘积
+
+<img src="LeetCode%20Hot100.assets/image-20200226121627810.png" alt="image-20200226121627810" style="zoom:80%;" align="left"/>
+
+**法一：左右乘积列表**
+
+L[i]代表nums[i]左边元素的乘积，注意L[0]=1，因为nums[0]左侧没有元素了。$L[i] = L[i - 1] * nums[i - 1]$
+
+R[i]同理，注意R[n - 1] = 1;
+
+```c++
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> L(n), R(n), output(n);
+        // vector<int> L, R, output;
+        // 这样写就会报错，因为未指定vector的大小，则默认初始化成容量为0了。
+        // 后续如果是用push_back()这类方法当然不会出错
+        // 但如果直接使用下标运算符[]，当然就会数组越界啦
+        L[0] = 1; R[n - 1] = 1;
+        for (int i = 1; i < n; i++)
+        {
+            L[i] = L[i - 1] * nums[i - 1];
+        }
+        for (int i = n - 2; i >= 0; i--)
+        {
+            R[i] = R[i + 1] * nums[i + 1];
+        }
+        for (int i = 0; i < n; i++)
+        {
+            output[i] = L[i] * R[i];
+        }
+        return output;
     }
 };
 ```

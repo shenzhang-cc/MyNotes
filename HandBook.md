@@ -36,6 +36,10 @@ INT_MIN在标准头文件limits.h中定义
     - 1.iterator erase(iterator position);//删除当前位置的元素。
     - 2.iterator erase(iterator first, iterator last);//删除当前区间的元素。
 
+- 初始化指定大小的vector：
+  - 一维：`vector<int> vec(n)`或`vector<int> vec(n, 0)`
+  - 二维：`vecotr<vector<int>> vec(n, vector<int>(m))` 或`vecotr<vector<int>> vec(n, vector<int>(m, 0))` 
+
 ## 栈
 
 - 对空栈使用pop()、top()等方法会报错。
