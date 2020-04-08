@@ -16,12 +16,15 @@
 
 双指针：[11. 盛水最多的容器]()
 
-排序：[23. 合并k个排序链表](# 23. 合并k个排序链表)  [75. 颜色分类]() [215. 数组中的第k个最大元素](# 215. 数组中的第k个最大元素)
+排序：[23. 合并k个排序链表](# 23. 合并k个排序链表)  [75. 颜色分类](# 75. 颜色分类) [215. 数组中的第k个最大元素](# 215. 数组中的第k个最大元素)
+
+DFS:494. 22. 39. 
 
 动态规划：[42. 接雨水](# 42. 接雨水) [198. 打家劫舍](# 198. 打家劫舍) [239. 滑动窗口最大值](# 239. 滑动窗口最大值) [337. 打家劫舍III](# 337. 打家劫舍III)
 
 ## 1. 两数之和
-<img src="LeetCode%20Hot100.assets/image-20200131210844744.png" alt="image-20200131210844744"  align="left" style="zoom:80%;" />
+
+<img src="LeetCode%20Hot100.assets/image-20200131210844744.png" alt="image-20200131210844744" style="zoom:80%;" />
 
 **法一：暴力法**
 
@@ -128,7 +131,7 @@ public:
 
 
 ## 2. 两数相加
-<img src="LeetCode%20Hot100.assets/image-20200131221610304.png" alt="image-20200131221610304"  align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200131221610304.png" alt="image-20200131221610304"/>
 
 无需单独设置进位位的方法，另外新建立了一个存放结果的链表，有优化空间。
 
@@ -176,7 +179,7 @@ public:
 
 ## 3. 无重复字符的最长子串
 
-<img src="LeetCode%20Hot100.assets/image-20200201094422861.png" alt="image-20200201094422861" style="zoom:100%;" align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200201094422861.png" alt="image-20200201094422861" style="zoom:100%;"/>
 
 **法一：利用向量实现的滑动窗口：**
 
@@ -260,7 +263,7 @@ public:
 
 ## 4. 寻找两个有序数组的中位数
 
-<img src="LeetCode%20Hot100.assets/image-20200201162400220.png" alt="image-20200201162400220" style="zoom:100%;" align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200201162400220.png" alt="image-20200201162400220" style="zoom:100%;" />
 
 **[求第K小法](https://leetcode-cn.com/problems/median-of-two-sorted-arrays/solution/xiang-xi-tong-su-de-si-lu-fen-xi-duo-jie-fa-by-w-2/)**
 
@@ -312,7 +315,7 @@ private:
 
 ## 5. 最长回文子串
 
-<img src="LeetCode%20Hot100.assets/image-20200201165207592.png" alt="image-20200201165207592"  align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200201165207592.png" alt="image-20200201165207592"/>
 
 **中心扩展法：**
 
@@ -355,7 +358,7 @@ private:
 
 ## 11. 盛水最多的容器
 
-<img src="LeetCode%20Hot100.assets/image-20200221185543027.png" alt="image-20200221185543027" style="zoom:80%;" align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200221185543027.png" alt="image-20200221185543027" style="zoom:80%;" />
 
 **法一：暴力法** 略
 
@@ -387,7 +390,7 @@ public:
 
 ## 15. 三数之和
 
-<img src="LeetCode%20Hot100.assets/image-20200201170920851.png" alt="image-20200201170920851"  align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200201170920851.png" alt="image-20200201170920851"/>
 
 **双指针法**
 
@@ -480,7 +483,7 @@ public:
 
 ## 17. 电话号码的字母组合
 
-<img src="LeetCode%20Hot100.assets/image-20200201172737389.png" alt="image-20200201172737389"  align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200201172737389.png" alt="image-20200201172737389"/>
 
 **法一 ：利用队列**
 
@@ -543,7 +546,7 @@ public:
 
 ## 19. 删除链表的倒数第N个节点
 
-<img src="LeetCode%20Hot100.assets/image-20200201173707324.png" alt="image-20200201173707324"  align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200201173707324.png" alt="image-20200201173707324"/>
 
 **两次遍历**
 
@@ -627,7 +630,7 @@ public:
 
 [回到tag](# tag)
 
-<img src="LeetCode%20Hot100.assets/image-20200201174255381.png" alt="image-20200201174255381"  align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200201174255381.png" alt="image-20200201174255381" style="zoom: 80%;" />
 
 **法一：利用哈希表和栈**
 
@@ -682,9 +685,9 @@ public:
 
 ## 21. 合并两个有序链表
 
-<img src="LeetCode%20Hot100.assets/image-20200201174653043.png" alt="image-20200201174653043"  align="left" style="zoom:80%;" />![image-20200201174914365](LeetCode%20Hot100.assets/image-20200201174914365.png)
+<img src="LeetCode%20Hot100.assets/image-20200201174653043.png" alt="image-20200201174653043" style="zoom:80%;" align="center"/>
 
-<img src="LeetCode%20Hot100.assets/image-20200201174949749.png" alt="image-20200201174949749" style="zoom:80%;" />
+<img src="LeetCode%20Hot100.assets/image-20200201174914365.png" alt="image-20200201174914365" style="zoom: 67%;" />
 
 ```c++
 /**
@@ -768,7 +771,7 @@ E1: 一次比较添加了两个节点
 
 E2：不加continue时：
 
-![image-20200201175942987](LeetCode%20Hot100.assets/image-20200201175942987.png)
+<img src="LeetCode%20Hot100.assets/image-20200201175942987.png" alt="image-20200201175942987" style="zoom:80%;" />
 
 
 
@@ -831,7 +834,7 @@ public:
 
 [回到tag](# tag)
 
-<img src="LeetCode%20Hot100.assets/image-20200214190109146.png" alt="image-20200214190109146" style="zoom:80%;" align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200214190109146.png" alt="image-20200214190109146" style="zoom:80%;"/>
 
 **法一：最小堆**
 
@@ -933,7 +936,7 @@ public:
 
 ## 31. 下一个排列
 
-<img src="LeetCode%20Hot100.assets/image-20200222120741816.png" alt="image-20200222120741816" style="zoom:80%;" align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200222120741816.png" alt="image-20200222120741816" style="zoom:80%;" />
 
 **算法：**
 
@@ -988,7 +991,7 @@ public:
 
 [回到tag](# tag)
 
-<img src="LeetCode%20Hot100.assets/image-20200212205627917.png" alt="image-20200212205627917" style="zoom:80%;" align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200212205627917.png" alt="image-20200212205627917" style="zoom:80%;" />
 
 **法一：递减栈**
 
@@ -1039,7 +1042,7 @@ public:
 
 ## 53. 最大子序和
 
-<img src="LeetCode%20Hot100.assets/image-20200203182921853.png" alt="image-20200203182921853"  align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200203182921853.png" alt="image-20200203182921853"  />
 
 **暴力法**略。
 
@@ -1171,7 +1174,7 @@ public:
 
 ## 70. 爬楼梯
 
-<img src="LeetCode%20Hot100.assets/image-20200204212653962.png" alt="image-20200204212653962"  align="left" style="zoom:80%;" />
+<img src="LeetCode%20Hot100.assets/image-20200204212653962.png" alt="image-20200204212653962"  style="zoom:80%;" />
 
 **动态规划**
 
@@ -1256,9 +1259,9 @@ public:
 
 [回到tag](# tag)
 
-<img src="LeetCode%20Hot100.assets/image-20200210173049054.png" alt="image-20200210173049054" style="zoom:80%;" align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200210173049054.png" alt="image-20200210173049054" style="zoom:80%;" />
 
-<img src="LeetCode%20Hot100.assets/image-20200210173216816.png" alt="image-20200210173216816" style="zoom:80%;" align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200210173216816.png" alt="image-20200210173216816" style="zoom:80%;" />
 
 **分析**
 
@@ -1270,7 +1273,7 @@ public:
 
 <img src="LeetCode%20Hot100.assets/20200210_093925822_iOS.png" style="zoom:50%;" />
 
-​```c++
+```c++
 class Solution {
 public:
     int largestRectangleArea(vector<int>& heights) {
@@ -1330,7 +1333,7 @@ public:
 
 [回到tag](# tag)
 
-<img src="LeetCode%20Hot100.assets/image-20200210200110018.png" alt="image-20200210200110018" style="zoom:80%;" align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200210200110018.png" alt="image-20200210200110018" style="zoom:80%;" />
 
 **法一：套用LeetCode 84的算法**
 
@@ -1375,7 +1378,7 @@ class Solution:
 
 ## 96. 不同的二叉搜索树
 
-<img src="LeetCode%20Hot100.assets/image-20200219203745115.png" alt="image-20200219203745115" style="zoom:80%;" align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200219203745115.png" alt="image-20200219203745115" style="zoom:80%;" />
 
 **法一：动态规划**
 
@@ -1401,11 +1404,25 @@ public:
 };
 ```
 
+*更正常的动态规划 :*其实用不到啥高大上的卡特兰数,就递推就好了. i个节点,左子树从0到i - 1穷举,右子树对应的节点个数为i - j - 1(因为有一个是根节点,所以减一).
+
+```python 
+class Solution:
+    def numTrees(self, n: int) -> int:
+        # dp[i]表示i个节点组成的不同的二叉搜索树的个数
+        dp = [1, 1]
+        for i in range(2, n + 1):
+            dp.append(0);
+            for j in range(0, i):
+                dp[i] += dp[j] * dp[i - j - 1]
+        return dp[-1]
+```
+
 
 
 ## 98. 验证二叉搜索树
 
-<img src="LeetCode%20Hot100.assets/image-20200219204943184.png" alt="image-20200219204943184" style="zoom:80%;" align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200219204943184.png" alt="image-20200219204943184" style="zoom:80%;" />
 
 利用二叉树搜索树的性质，中序遍历：左-根-右，因为是二叉搜索树，则所得到的的序列一定是递增序列。要注意的是int类型的变量上下限为：INT_MAX = 2147483647, INT_MIN = -INT_MAX - 1
 
@@ -1499,7 +1516,7 @@ public:
 
 ## 105. 从前序与中序遍历序列构造二叉树
 
-<img src="LeetCode%20Hot100.assets/image-20200219200624937.png" alt="image-20200219200624937" style="zoom:80%;" align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200219200624937.png" alt="image-20200219200624937" style="zoom:80%;"/>
 
 **法一：递归构建**
 
@@ -1544,7 +1561,7 @@ public:
 
 ## 114. 二叉树展开为链表
 
-<img src="LeetCode%20Hot100.assets/image-20200219202123486.png" alt="image-20200219202123486" style="zoom:80%;" align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200219202123486.png" alt="image-20200219202123486" style="zoom:80%;" />
 
 **法一（可能不是原地）**
 
@@ -1577,16 +1594,18 @@ public:
 
 ## 121. 买卖股票的最佳时机
 
-<img src="LeetCode%20Hot100.assets/image-20200205153558132.png" alt="image-20200205153558132" style="zoom:80%;" align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200205153558132.png" alt="image-20200205153558132" style="zoom:80%;" />
 
 **法一：动态规划**
 
-$dp[i]$表示第 $i$ 天的==最大收益==（或许这里不应该称为“最大收益”，总之就是填网格时，第 i 个格子应该填的数值），$minprice$表示前$i - 1$天的最低价格， $maxprofit$表示第$i - 1$天的最大利润。则$dp[i]$有两种可能情况：
+$dp[i]$表示第 $i$ 天的==最大收益==. $minprice$表示前$i - 1$天的最低价格，第 i 天可以选择卖出或不卖出 。则$dp[i]$有两种可能情况：
 
 - 第 i 天卖出：$dp[i] = price[i] - minprice$
-- 第 i 天不卖出：$dp[i] = dp[i - 1]=maxprofit$
+- 第 i 天不卖出：$dp[i] = dp[i - 1]$
 
 状态转移方程：$dp[i] = max(第i天卖出, 第i天不卖出)$
+
+*编码时, 其实初期就直接慢慢填dp表格吧,编码简单又好理解.*
 
 第一版
 
@@ -1636,7 +1655,7 @@ public:
 
 第三版：维护一个dp数组，每个结果都保留下来，这样编码会更简单，不过因为动态规划每次只会使用临近的前一个值，这样写存在空间浪费。
 
-```c++
+​```c++
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
@@ -1655,6 +1674,21 @@ public:
         return maxValue > 0 ? maxValue : 0;
     }
 };
+```
+
+第四版:其实dp数组每一个格子里存的都是此时的最大利润,最后只要返回最后一个格子的值就好了. Python版本.
+
+```Python
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        if not prices:
+            return 0
+        minPrice = prices[0]
+        dp = [0 for _ in range(len(prices))]
+        for i in range(1, len(prices)):
+            minPrice = min(minPrice, prices[i - 1])
+            dp[i] = max(dp[i - 1], prices[i] - minPrice)
+        return dp[-1]
 ```
 
 
@@ -1679,11 +1713,68 @@ public:
 
 ## 141. 环形链表
 
+<img src="LeetCode%20Hot100.assets/image-20200306204045576.png" alt="image-20200306204045576" style="zoom:80%;"/>
+
+**双指针法:** 快指针每次走两步,慢指针每次走一步.若链表中存在环,则快指针终将会追上慢指针。先考虑情况一：快指针落后慢指针一步时，快指针将在下一次迭代追上慢指针。快指针落后两步、三步的情况，分别再经历一次和两次迭代后变为情况一。
+
+c++版：
+
+```c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        if (head == NULL || head->next == NULL) return false;
+        ListNode* p = head;
+        ListNode* q = p;
+        while (p != NULL && p->next != NULL)
+        {
+            p = p->next->next;
+            q = q->next;
+            if (p == q) return true;
+        }
+        return false;
+    }
+};
+```
+
+python版：
+
+```python
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def hasCycle(self, head: ListNode) -> bool:
+        if not head:
+            return False
+        slow = head
+        fast = head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+            if fast == slow:
+                return True
+        return False
+```
+
+
+
 ## 198. 打家劫舍
 
 [回到tag](# tag) 
 
-<img src="LeetCode%20Hot100.assets/image-20200205182201396.png" alt="image-20200205182201396" style="zoom:80%;" align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200205182201396.png" alt="image-20200205182201396" style="zoom:80%;" />
 
 **动态规划**
 
@@ -1741,7 +1832,7 @@ public:
 
 [回到tag](# tag) 
 
-<img src="LeetCode%20Hot100.assets/image-20200213163239649.png" alt="image-20200213163239649" style="zoom:80%;" align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200213163239649.png" alt="image-20200213163239649" style="zoom:80%;"/>
 
 **法一：最小堆**
 
@@ -1766,7 +1857,7 @@ public:
 
 ## 226. 翻转二叉树
 
-<img src="LeetCode%20Hot100.assets/image-20200219201837656.png" alt="image-20200219201837656" style="zoom:80%;" align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200219201837656.png" alt="image-20200219201837656" style="zoom:80%;"/>
 
 **法一：递归**
 
@@ -1788,7 +1879,7 @@ public:
 
 ## 238. 除自身以外数组的乘积
 
-<img src="LeetCode%20Hot100.assets/image-20200226121627810.png" alt="image-20200226121627810" style="zoom:80%;" align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200226121627810.png" alt="image-20200226121627810" style="zoom:80%;" />
 
 **法一：左右乘积列表**
 
@@ -1830,7 +1921,7 @@ public:
 
 [回到tag](# tag) 
 
-<img src="LeetCode%20Hot100.assets/image-20200213211252734.png" alt="image-20200213211252734" style="zoom:90%;" align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200213211252734.png" alt="image-20200213211252734" style="zoom:90%;"/>
 
 **法一：暴力法**
 
@@ -1867,7 +1958,7 @@ public:
 
 ## 337. 打家劫舍III
 
-<img src="LeetCode%20Hot100.assets/image-20200219215447370.png" alt="image-20200219215447370" style="zoom:80%;" align='left'/>
+<img src="LeetCode%20Hot100.assets/image-20200219215447370.png" alt="image-20200219215447370" style="zoom:80%;"/>
 
 **法一：动态规划、DFS、递归**
 
@@ -1900,7 +1991,7 @@ public:
 
 ## 347. 前k个高频元素
 
-<img src="LeetCode%20Hot100.assets/image-20200214202749879.png" alt="image-20200214202749879" style="zoom:80%;" align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200214202749879.png" alt="image-20200214202749879" style="zoom:80%;"/>
 
 **法一：map+minHeap**
 
@@ -1944,7 +2035,7 @@ public:
 
 [回到tag](# tag)
 
-<img src="LeetCode%20Hot100.assets/image-20200208115759616.png" alt="image-20200208115759616" style="zoom:80%;" align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200208115759616.png" alt="image-20200208115759616" style="zoom:80%;"/>
 
 **法一：利用辅助栈**
 
@@ -1985,7 +2076,7 @@ class Solution:
 
 ## 538. 把二叉搜索树转化为累加树
 
-<img src="LeetCode%20Hot100.assets/image-20200219203445648.png" alt="image-20200219203445648" style="zoom:80%;" align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200219203445648.png" alt="image-20200219203445648" style="zoom:80%;"/>
 
 **法一：反中序遍历**
 
@@ -2012,9 +2103,13 @@ public:
 
 
 
+## 543. 二叉树的直径
+
+
+
 ## 560. 和为K的子数组
 
-<img src="LeetCode%20Hot100.assets/image-20200222163624768.png" alt="image-20200222163624768" style="zoom:80%;" align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200222163624768.png" alt="image-20200222163624768" style="zoom:80%;"/>
 
 **法一：暴力法**  找出所有可能的数组，分别计算和。==超时==
 
@@ -2071,7 +2166,7 @@ public:
 
 ## 581. 最短无序连续子数组
 
-<img src="LeetCode%20Hot100.assets/image-20200222180627430.png" alt="image-20200222180627430" style="zoom:80%;" align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200222180627430.png" alt="image-20200222180627430" style="zoom:80%;"/>
 
 **法一：排序**
 
@@ -2098,7 +2193,7 @@ public:
 
 ## 617. 合并二叉树
 
-<img src="LeetCode%20Hot100.assets/image-20200219202720388.png" alt="image-20200219202720388" style="zoom:80%;" align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200219202720388.png" alt="image-20200219202720388" style="zoom:80%;"/>
 
 **法一：递归**
 
@@ -2127,7 +2222,7 @@ public:
 
 [回到tag](# tag)
 
-<img src="LeetCode%20Hot100.assets/image-20200208161657443.png" alt="image-20200208161657443" style="zoom:80%;" align="left"/>
+<img src="LeetCode%20Hot100.assets/image-20200208161657443.png" alt="image-20200208161657443" style="zoom:80%;"/>
 
 **法一：递减栈**
 

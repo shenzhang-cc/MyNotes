@@ -27,7 +27,7 @@
 <div style="page-break-after: always;"></div>
 ## 基本概念
 
-<img src="Data%20Structure.assets/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5.jpg" style="zoom:80%;" />
+<img src="Data%20Structure.assets/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5.jpg" style="zoom:80%;"/>
 
 
 ### 复杂度渐进表示法
@@ -155,16 +155,16 @@ int MaxSubSeqSum_4(vector<int> A) {  // 在线处理
 
 *表示多项式$f(x) = a_{0}x_{0} + a_{1}x_{1} + ... + a_{n}x_{n}$*
 
-**顺序存储结构直接表示**
+**(1)顺序存储结构直接表示**
 使用一维数组A[a~1~, a~2~, ... , a~n~], 其中a~i~表示x^i^的系数。
 
 缺点：空间浪费，可能有很多0项。
 
-**顺序存储结构表示非零项**
+**(2)顺序存储结构表示非零项**
 
 二元组(a~i~, i), a~i~表示系数， i是指数。
 
-**链式结构存储非零项**
+**(3)链式结构存储非零项**
 
 结点为：
 
@@ -1508,6 +1508,8 @@ huffmanNode huffmanTree(minHeap H) {
 ## 图
 
 ![](DataStructure.assets/013120014870_0%E5%9B%BE_1.Jpeg)
+
+
 
 
 
