@@ -20,7 +20,7 @@ void main () {
 }
 ```
 
-### INT_MIN
+### INT_MIN、INT_MAX
 
 INT_MIN在标准头文件limits.h中定义
 
