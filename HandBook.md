@@ -1,6 +1,6 @@
 # Personal HandBook(c++)
 
-## 常用
+## Common
 ### 调用类（实例化类）的两种方式
 
 ```c++
@@ -24,27 +24,27 @@ void main () {
 
 INT_MIN在标准头文件limits.h中定义
 
-1.#define INT_MAX 2147483647
+#define INT_MAX 2147483647
 
-2.#define INT_MIN (-INT_MAX - 1)
+#define INT_MIN (-INT_MAX - 1)
 
 ## string 
 
-- s.find(). 返回值是字母在母串中的位置（下标记录），如果没有找到，那么会返回一个特别的标记npos。（返回值可以看成是一个int型的数）
+- s.find()  返回值是字母在母串中的位置（下标记录），如果没有找到，那么会返回一个特别的标记npos。（返回值可以看成是一个int型的数）
 
 ```c++
-int pos = s.find("a");
+int pos = s.find("abf");
 if (pos != s.npos)
     ...
 ```
 
-- s.replace(). 
+- s.replace()
 
 ```c++
 s.replace(pos, len, "b"); // 用"b"替换pos处为起点,长度len的范围内的字符.
 ```
 
-  ### 字符串的拼接
+- 字符串的拼接
 
 在 C++ 中，res += s 和 res = res + s 的含义是不一样的。前者是直接在 res 后面添加字符串；后者是用一个临时对象计算 res + s，会消耗很多时间和内存。
 
@@ -62,11 +62,11 @@ s.replace(pos, len, "b"); // 用"b"替换pos处为起点,长度len的范围内�
 
 ## 栈
 
-- 对空栈使用pop()、top()等方法会报错。
+- 对空栈使用pop()、top()等方法会报错。==因此循环中做此操作前要先检查栈是否为空。==
 
-## 优先队列
+## 堆（优先队列）
 
-c++中使用优先队列：
+- c++中使用优先队列：
 
 ```c++
 #include<queue>
@@ -81,8 +81,25 @@ priority_queue<int, vector<int>, less<int> > q_max;
 // minheap
 priority_queue<int, vector<int>, greater<int> > q_min;
 ```
+- 自定义类型(如: ListNode)的比较函数
 
-基本操作：与普通队列基本一致。
+```python
+struct cmp{
+    bool operator ()(const ListNode* l1, const ListNode* l2){
+        return l1->val < l2->val;//小的放左边,即升序
+    }
+};
+struct cmp{
+    bool operator ()(const ListNode* l1, const ListNode* l2){
+        return l1->val > l2->val;//大的放左边,即降序
+    }
+};
+int main(){
+    priority_queue<int,vector<int>,cmp> pq;
+}
+```
+
+- 基本操作：与普通队列基本一致。
 
 > top 访问队头元素 
 >
@@ -100,7 +117,25 @@ priority_queue<int, vector<int>, greater<int> > q_min;
 
 
 
+
+
+
+
 ## 哈希表
+
+## sort
+
+- 自定义sort的比较函数
+
+```python
+int main() {
+    vector<string> vec
+    auto cmp = [](string a, string b){return a < b};
+    sort(vec.begin(), vec.end(), cmp);
+}
+```
+
+
 
 ## 力扣错误记录
 
@@ -110,7 +145,7 @@ priority_queue<int, vector<int>, greater<int> > q_min;
 >     ^
 >cc1plus: some warnings being treated as errors
 
-**解决办法：**给函数最后添加一句“return”（虽然可能用不上）
+**解决办法：**给函数最后添加一句“return”（虽然用不上）
 
 # Personal HandBook(python)
 
